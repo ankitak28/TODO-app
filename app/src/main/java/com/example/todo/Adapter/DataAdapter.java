@@ -1,6 +1,7 @@
 package com.example.todo.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todo.AddTasks;
 import com.example.todo.MainActivity;
 import com.example.todo.Model.DataModel;
 import com.example.todo.R;
@@ -17,7 +19,7 @@ import com.example.todo.utils.DataBaseHelper;
 
 import java.util.List;
 
-public class dataAdapter extends RecyclerView.Adapter<dataAdapter.MyViewHolder> {
+public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> {
 
     private DataBaseHelper db;
     private MainActivity activity;
@@ -31,7 +33,7 @@ public class dataAdapter extends RecyclerView.Adapter<dataAdapter.MyViewHolder> 
         }
     }
 
-    dataAdapter(DataBaseHelper dataBaseHelper, MainActivity activity){
+    public DataAdapter(DataBaseHelper dataBaseHelper, MainActivity activity){
         this.db = dataBaseHelper;
         this.activity = activity;
     }
@@ -50,7 +52,16 @@ public class dataAdapter extends RecyclerView.Adapter<dataAdapter.MyViewHolder> 
         notifyDataSetChanged();
     }
     public void editTask(int position){
-        
+
+        DataModel model = dataModelList.get(position);
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("id",model.getId());
+        bundle.putString("task",model.getTask());
+
+        AddTasks addTasks = new AddTasks();
+        addTasks.setArguments(bundle);
+        addTasks.show(activity.getSupportFragmentManager(),addTasks.getTag());
     }
 
     @NonNull
@@ -79,7 +90,7 @@ public class dataAdapter extends RecyclerView.Adapter<dataAdapter.MyViewHolder> 
     }
 
     private boolean checkboxStatus(int num){
-        return num!=0?false:true;
+        return num!=0;
     }
 
     @Override

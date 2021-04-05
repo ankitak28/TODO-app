@@ -40,8 +40,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void insert(DataModel data){
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COL_2,data.getStatus());
-        values.put(COL_3,data.getTask());
+        values.put(COL_2,data.getTask());
+        values.put(COL_3,data.getStatus());
         db.insert(TABLE_NAME,null,values);
     }
     public void deleteTask(int id){
